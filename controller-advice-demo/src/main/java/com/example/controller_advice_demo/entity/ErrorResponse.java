@@ -1,4 +1,4 @@
-package com.example.rest_demo.entity;
+package com.example.controller_advice_demo.entity;
 
 public class ErrorResponse {
     private int status;

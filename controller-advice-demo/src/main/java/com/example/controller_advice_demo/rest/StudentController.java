@@ -1,8 +1,8 @@
-package com.example.rest_demo.rest;
+package com.example.controller_advice_demo.rest;
 
-import com.example.rest_demo.entity.ErrorResponse;
-import com.example.rest_demo.entity.Student;
-import com.example.rest_demo.exception.StudentException;
+import com.example.controller_advice_demo.entity.ErrorResponse;
+import com.example.controller_advice_demo.entity.Student;
+import com.example.controller_advice_demo.exception.StudentException;
 import jakarta.annotation.PostConstruct;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,15 +38,6 @@ public class StudentController {
         }
         return sv;
     }
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> catchError(StudentException e) {
-        ErrorResponse er = new ErrorResponse(HttpStatus.NOT_FOUND.value(), e.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(er);
-    }
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> catchError(Exception e) {
-        ErrorResponse er = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(er);
-    }
+
 
 }
