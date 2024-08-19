@@ -34,7 +34,29 @@ public class StudentController {
     }
     @PostMapping("/")
     public ResponseEntity<Student> addStudent(@RequestBody Student student){
+        student.setId(0);
         student =  studentService.addStudent(student);
         return ResponseEntity.status(HttpStatus.CREATED).body(student);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Student> updateStudent(@PathVariable int id, @RequestBody Student student){
+        Student existingStudent = studentService.getStudentById(id);
+        if(existingStudent != null) {
+            existingStudent.setLastname(student.getLastname());
+            existingStudent.setFirstname(student.getFirstname());
+            existingStudent.setEmail(student.getEmail());
+            existingStudent = studentService.updateStudent(existingStudent);
+            return ResponseEntity.ok(existingStudent);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteStudent(@PathVariable int id){
+        Student existingStudent = studentService.getStudentById(id);
+        if(existingStudent != null) {
+            studentService.deleteStudent(id);
+            return ResponseEntity.ok().build();
+        } else{ return ResponseEntity.notFound().build();}
     }
 }
