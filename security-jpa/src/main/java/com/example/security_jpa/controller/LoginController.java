@@ -1,19 +1,17 @@
-package com.example.demo_spring_mvc_security.controller;
+package com.example.security_jpa.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class LoginController {
-
     @GetMapping("/showLoginPage")
-    public String showLoginPage(){
+    public String login() {
         return "login";
     }
-
-    @GetMapping("/showPage403")
-    public String showPage403(){
+    @GetMapping("/show")
+    public String showErrorPage(){
         return "error/403";
     }
-
 }
+

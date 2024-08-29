@@ -21,14 +21,23 @@ public class MySecurity {
         return userDetailsManager;
     }
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(
-                configurer->configurer.anyRequest().authenticated()
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+        http.authorizeHttpRequests(
+                configurer->configurer
+                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/manager/**").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers("/teacher/**").hasAnyRole("ADMIN", "MANAGER", "TEACHER")
+                        .anyRequest().permitAll()
         ).formLogin(
                 form->form.loginPage("/showLoginPage")
                         .loginProcessingUrl("/authenticateTheUser")
                         .permitAll()
+        ).logout(
+                logout->logout.permitAll()
+        ).exceptionHandling(
+                configurer->configurer.accessDeniedPage("/showPage403")
         );
-        return httpSecurity.build();
+        return http.build();
     }
 }
