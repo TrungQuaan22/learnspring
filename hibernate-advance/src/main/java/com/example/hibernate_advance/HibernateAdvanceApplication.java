@@ -6,6 +6,7 @@ import com.example.hibernate_advance.dao.TeacherDetailDAO;
 import com.example.hibernate_advance.entity.Course;
 import com.example.hibernate_advance.entity.Teacher;
 import com.example.hibernate_advance.entity.TeacherDetail;
+import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -35,17 +36,19 @@ public class HibernateAdvanceApplication {
 		Teacher teacher = new Teacher();
 		teacher.setFirstName("Quan");
 		teacher.setLastName("Giang Trung");
+
 		TeacherDetail teacherDetail = new TeacherDetail();
 		teacherDetail.setEmail("giangtrungquan01@gmail.com");
 		teacherDetail.setAddress("403 Bach Mai");
-		List<Course> courses = new ArrayList<>();
+
+		teacher.setTeacherDetail(teacherDetail);
 		Course course1 = new Course("Toán 12", "Boi duong hoc sinh gioi",null, null);
 		Course course2 = new Course("Văn 12", "Boi duong hoc sinh gioi",null, null);
-		courses.add(course1);
-		courses.add(course2);
-		teacher.setCourses(courses);
+		teacher.addCourse(course1);
+		teacher.addCourse(course2);
+		System.out.println("Updating Teacher...");
 		teacherDAO.update(teacher);
-
+		System.out.println("Done");
 
 
 	}

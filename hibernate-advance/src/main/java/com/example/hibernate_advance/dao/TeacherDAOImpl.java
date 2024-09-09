@@ -34,6 +34,7 @@ public class TeacherDAOImpl implements TeacherDAO{
     }
 
     @Override
+    @Transactional
     public void update(Teacher teacher) {
         em.merge(teacher);
         em.flush();
